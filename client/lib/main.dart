@@ -1,0 +1,25 @@
+import 'dart:io';
+
+import 'package:client/src/ui/core/vendor_ding_app.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:window_manager/window_manager.dart';
+
+Future<void> main() async {
+  await dotenv.load();
+
+  if (Platform.isWindows) {
+    await windowManager.ensureInitialized();
+    const windowsOptions = WindowOptions(
+      size: Size(600, 1080),
+      center: true,
+    );
+
+    windowManager.waitUntilReadyToShow(windowsOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
+
+  runApp(VendorDingApp());
+}
