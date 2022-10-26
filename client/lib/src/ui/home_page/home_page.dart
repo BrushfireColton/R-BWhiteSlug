@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:client/src/core/di/injection.dart';
@@ -60,12 +61,22 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                       onPressed: () {
                         viewModel.authorize((authUrl) {
                           final completer = Completer<Uri>();
-                          AutoRouter.of(context).push(
-                            AuthRoute(
-                              viewModel: resolveInstanceOf(),
-                              onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
-                            ),
-                          );
+
+                          if (Platform.isWindows) {
+                            AutoRouter.of(context).push(
+                              DesktopAuthRoute(
+                                viewModel: resolveInstanceOf(),
+                                onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
+                              ),
+                            );
+                          } else {
+                            AutoRouter.of(context).push(
+                              MobileAuthRoute(
+                                viewModel: resolveInstanceOf(),
+                                onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
+                              ),
+                            );
+                          }
 
                           return completer.future;
                         });

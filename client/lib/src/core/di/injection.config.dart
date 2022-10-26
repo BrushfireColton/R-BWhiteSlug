@@ -11,7 +11,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import '../../domain/oauth_config.dart' as _i5;
 import '../../services/auth_service.dart' as _i3;
 import '../../services/auth_service_impl.dart' as _i4;
-import '../../ui/auth/auth_view_model.dart' as _i6;
+import '../../ui/auth/core/auth_view_model.dart' as _i6;
 import '../../ui/home_page/home_page_view_model.dart' as _i7;
 import 'custom_injections_module.dart'
     as _i8; // ignore_for_file: unnecessary_lambdas
