@@ -18,7 +18,11 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void didChangeDependencies() {
     timer = Timer(const Duration(seconds: 3), () {
-      AutoRouter.of(context).push(HomeRoute(viewModel: resolveInstanceOf()));
+      AutoRouter.of(context).push(
+        HomeRoute(
+          viewModel: resolveInstanceOf(),
+        ),
+      );
     });
     super.didChangeDependencies();
   }
@@ -33,7 +37,10 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/images/splash_image.jpg'), fit: BoxFit.cover),
+        image: DecorationImage(
+          image: AssetImage('assets/images/splash_image.jpg'),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
