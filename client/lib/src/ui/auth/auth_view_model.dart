@@ -9,6 +9,5 @@ class AuthViewModel extends EmpireViewModel {
   AuthViewModel(this.oAuthConfig);
 
   @override
-  Iterable<EmpireProperty> get empireProps =>
-      throw UnimplementedError('TODO: implement empireProps for AuthViewModel');
+  Iterable<EmpireProperty> get empireProps => [];
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:client/src/core/di/injection.dart';
 import 'package:client/src/ui/core/vendor_checker_thingy_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,6 +8,7 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   await dotenv.load();
+  configureDependencies();
 
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();

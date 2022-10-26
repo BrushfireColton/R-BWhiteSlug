@@ -1,13 +1,22 @@
+import 'dart:async';
+
+import 'package:auto_route/auto_route.dart';
+import 'package:client/src/core/di/injection.dart';
+import 'package:client/src/ui/core/routes.gr.dart';
+import 'package:client/src/ui/home_page/home_page_view_model.dart';
+import 'package:empire/empire.dart';
 import 'package:flutter/material.dart';
 
-class Splash extends StatefulWidget {
-  const Splash({super.key});
+class HomePage extends EmpireWidget<HomePageViewModel> {
+  const HomePage({super.key, required super.viewModel});
 
   @override
-  State<Splash> createState() => _SplashState();
+  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel> createEmpire() => _HomePageState(viewModel);
 }
 
-class _SplashState extends State<Splash> {
+class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
+  _HomePageState(super.viewModel);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +57,19 @@ class _SplashState extends State<Splash> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        viewModel.authorize((authUrl) {
+                          final completer = Completer<Uri>();
+                          AutoRouter.of(context).push(
+                            AuthRoute(
+                              viewModel: resolveInstanceOf(),
+                              onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
+                            ),
+                          );
+
+                          return completer.future;
+                        });
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
                       ),
@@ -75,21 +96,6 @@ class _SplashState extends State<Splash> {
                 ),
               ),
             )
-            // Expanded(
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.only(bottom: 200.0),
-            // child: Text(
-            //   'Vendor Checker Thing',
-            //   style: Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white),
-            // ),
-            //       ),
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),

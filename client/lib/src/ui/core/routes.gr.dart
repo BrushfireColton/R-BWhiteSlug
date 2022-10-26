@@ -16,9 +16,9 @@ import 'package:flutter/material.dart' as _i5;
 
 import '../auth/auth_page.dart' as _i3;
 import '../auth/auth_view_model.dart' as _i7;
-import '../auth/login_page.dart' as _i2;
-import '../auth/login_view_model.dart' as _i6;
-import '../splash/splash.dart' as _i1;
+import '../home_page/home_page.dart' as _i2;
+import '../home_page/home_page_view_model.dart' as _i6;
+import '../splash/splash_page.dart' as _i1;
 
 class AppRouter extends _i4.RootStackRouter {
   AppRouter([_i5.GlobalKey<_i5.NavigatorState>? navigatorKey])
@@ -26,17 +26,17 @@ class AppRouter extends _i4.RootStackRouter {
 
   @override
   final Map<String, _i4.PageFactory> pagesMap = {
-    Splash.name: (routeData) {
+    SplashRoute.name: (routeData) {
       return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.Splash(),
+        child: const _i1.SplashPage(),
       );
     },
-    LoginRoute.name: (routeData) {
-      final args = routeData.argsAs<LoginRouteArgs>();
+    HomeRoute.name: (routeData) {
+      final args = routeData.argsAs<HomeRouteArgs>();
       return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.LoginPage(
+        child: _i2.HomePage(
           key: args.key,
           viewModel: args.viewModel,
         ),
@@ -58,12 +58,12 @@ class AppRouter extends _i4.RootStackRouter {
   @override
   List<_i4.RouteConfig> get routes => [
         _i4.RouteConfig(
-          Splash.name,
+          SplashRoute.name,
           path: '/',
         ),
         _i4.RouteConfig(
-          LoginRoute.name,
-          path: '/login',
+          HomeRoute.name,
+          path: '/home',
         ),
         _i4.RouteConfig(
           AuthRoute.name,
@@ -73,48 +73,48 @@ class AppRouter extends _i4.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.Splash]
-class Splash extends _i4.PageRouteInfo<void> {
-  const Splash()
+/// [_i1.SplashPage]
+class SplashRoute extends _i4.PageRouteInfo<void> {
+  const SplashRoute()
       : super(
-          Splash.name,
+          SplashRoute.name,
           path: '/',
         );
 
-  static const String name = 'Splash';
+  static const String name = 'SplashRoute';
 }
 
 /// generated route for
-/// [_i2.LoginPage]
-class LoginRoute extends _i4.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({
+/// [_i2.HomePage]
+class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({
     _i5.Key? key,
-    required _i6.LoginViewModel viewModel,
+    required _i6.HomePageViewModel viewModel,
   }) : super(
-          LoginRoute.name,
-          path: '/login',
-          args: LoginRouteArgs(
+          HomeRoute.name,
+          path: '/home',
+          args: HomeRouteArgs(
             key: key,
             viewModel: viewModel,
           ),
         );
 
-  static const String name = 'LoginRoute';
+  static const String name = 'HomeRoute';
 }
 
-class LoginRouteArgs {
-  const LoginRouteArgs({
+class HomeRouteArgs {
+  const HomeRouteArgs({
     this.key,
     required this.viewModel,
   });
 
   final _i5.Key? key;
 
-  final _i6.LoginViewModel viewModel;
+  final _i6.HomePageViewModel viewModel;
 
   @override
   String toString() {
-    return 'LoginRouteArgs{key: $key, viewModel: $viewModel}';
+    return 'HomeRouteArgs{key: $key, viewModel: $viewModel}';
   }
 }
 
