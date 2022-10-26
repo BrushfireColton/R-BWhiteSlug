@@ -1,15 +1,15 @@
 import 'package:client/src/ui/core/routes.gr.dart';
 import 'package:flutter/material.dart';
 
-class VendorDingApp extends StatelessWidget {
+class VendorCheckerThingyApp extends StatelessWidget {
   final router = AppRouter();
 
-  VendorDingApp({super.key});
+  VendorCheckerThingyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Bungie Vendor Things',
+      title: 'Destiny 2 VCT',
       routerDelegate: router.delegate(),
       routeInformationParser: router.defaultRouteParser(),
     );
