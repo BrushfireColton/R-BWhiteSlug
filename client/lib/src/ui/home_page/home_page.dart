@@ -12,7 +12,8 @@ class HomePage extends EmpireWidget<HomePageViewModel> {
   const HomePage({super.key, required super.viewModel});
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel> createEmpire() => _HomePageState(viewModel);
+  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel>
+      createEmpire() => _HomePageState(viewModel);
 }
 
 class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
@@ -54,7 +55,10 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                       child: Text(
                         'Vendor Checker Thingy',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            ?.copyWith(color: Colors.white),
                       ),
                     ),
                     ElevatedButton(
@@ -66,14 +70,14 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                             AutoRouter.of(context).push(
                               DesktopAuthRoute(
                                 viewModel: resolveInstanceOf(),
-                                onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
+                                onAuthCodeRedirect: (redirectUrl) =>
+                                    completer.complete(redirectUrl),
                               ),
                             );
                           } else {
                             AutoRouter.of(context).push(
-                              MobileAuthRoute(
+                              VendorScreen(
                                 viewModel: resolveInstanceOf(),
-                                onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
                               ),
                             );
                           }
@@ -82,7 +86,8 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                         });
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
+                        backgroundColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.deepOrange),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -102,11 +107,11 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                         width: 128,
                         height: 128,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

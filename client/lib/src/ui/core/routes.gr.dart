@@ -11,33 +11,45 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i6;
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:flutter/material.dart' as _i7;
 
-import '../auth/core/auth_view_model.dart' as _i8;
-import '../auth/platform/desktop/desktop_auth_page.dart' as _i4;
-import '../auth/platform/mobile/mobile_auth_page.dart' as _i3;
-import '../home_page/home_page.dart' as _i2;
-import '../home_page/home_page_view_model.dart' as _i7;
+import '../auth/core/auth_view_model.dart' as _i10;
+import '../auth/platform/desktop/desktop_auth_page.dart' as _i5;
+import '../auth/platform/mobile/mobile_auth_page.dart' as _i4;
+import '../home_page/home_page.dart' as _i3;
+import '../home_page/home_page_view_model.dart' as _i9;
 import '../splash/splash_page.dart' as _i1;
+import '../vendor_screen/vendor_screen.dart' as _i2;
+import '../vendor_screen/vendor_screen_view_model.dart' as _i8;
 
-class AppRouter extends _i5.RootStackRouter {
-  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
+class AppRouter extends _i6.RootStackRouter {
+  AppRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i5.PageFactory> pagesMap = {
+  final Map<String, _i6.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SplashPage(),
       );
     },
+    VendorScreen.name: (routeData) {
+      final args = routeData.argsAs<VendorScreenArgs>();
+      return _i6.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i2.VendorScreen(
+          key: args.key,
+          viewModel: args.viewModel,
+        ),
+      );
+    },
     HomeRoute.name: (routeData) {
       final args = routeData.argsAs<HomeRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.HomePage(
+        child: _i3.HomePage(
           key: args.key,
           viewModel: args.viewModel,
         ),
@@ -45,9 +57,9 @@ class AppRouter extends _i5.RootStackRouter {
     },
     MobileAuthRoute.name: (routeData) {
       final args = routeData.argsAs<MobileAuthRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i3.MobileAuthPage(
+        child: _i4.MobileAuthPage(
           key: args.key,
           viewModel: args.viewModel,
           onAuthCodeRedirect: args.onAuthCodeRedirect,
@@ -56,9 +68,9 @@ class AppRouter extends _i5.RootStackRouter {
     },
     DesktopAuthRoute.name: (routeData) {
       final args = routeData.argsAs<DesktopAuthRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i4.DesktopAuthPage(
+        child: _i5.DesktopAuthPage(
           key: args.key,
           viewModel: args.viewModel,
           onAuthCodeRedirect: args.onAuthCodeRedirect,
@@ -68,20 +80,24 @@ class AppRouter extends _i5.RootStackRouter {
   };
 
   @override
-  List<_i5.RouteConfig> get routes => [
-        _i5.RouteConfig(
+  List<_i6.RouteConfig> get routes => [
+        _i6.RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
+          VendorScreen.name,
+          path: '/vendor_screen',
+        ),
+        _i6.RouteConfig(
           HomeRoute.name,
           path: '/home',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           MobileAuthRoute.name,
           path: '/mobile_auth',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           DesktopAuthRoute.name,
           path: '/desktop_auth',
         ),
@@ -90,7 +106,7 @@ class AppRouter extends _i5.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashPage]
-class SplashRoute extends _i5.PageRouteInfo<void> {
+class SplashRoute extends _i6.PageRouteInfo<void> {
   const SplashRoute()
       : super(
           SplashRoute.name,
@@ -101,11 +117,45 @@ class SplashRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.HomePage]
-class HomeRoute extends _i5.PageRouteInfo<HomeRouteArgs> {
+/// [_i2.VendorScreen]
+class VendorScreen extends _i6.PageRouteInfo<VendorScreenArgs> {
+  VendorScreen({
+    _i7.Key? key,
+    required _i8.VendorScreenViewModel viewModel,
+  }) : super(
+          VendorScreen.name,
+          path: '/vendor_screen',
+          args: VendorScreenArgs(
+            key: key,
+            viewModel: viewModel,
+          ),
+        );
+
+  static const String name = 'VendorScreen';
+}
+
+class VendorScreenArgs {
+  const VendorScreenArgs({
+    this.key,
+    required this.viewModel,
+  });
+
+  final _i7.Key? key;
+
+  final _i8.VendorScreenViewModel viewModel;
+
+  @override
+  String toString() {
+    return 'VendorScreenArgs{key: $key, viewModel: $viewModel}';
+  }
+}
+
+/// generated route for
+/// [_i3.HomePage]
+class HomeRoute extends _i6.PageRouteInfo<HomeRouteArgs> {
   HomeRoute({
-    _i6.Key? key,
-    required _i7.HomePageViewModel viewModel,
+    _i7.Key? key,
+    required _i9.HomePageViewModel viewModel,
   }) : super(
           HomeRoute.name,
           path: '/home',
@@ -124,9 +174,9 @@ class HomeRouteArgs {
     required this.viewModel,
   });
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
-  final _i7.HomePageViewModel viewModel;
+  final _i9.HomePageViewModel viewModel;
 
   @override
   String toString() {
@@ -135,11 +185,11 @@ class HomeRouteArgs {
 }
 
 /// generated route for
-/// [_i3.MobileAuthPage]
-class MobileAuthRoute extends _i5.PageRouteInfo<MobileAuthRouteArgs> {
+/// [_i4.MobileAuthPage]
+class MobileAuthRoute extends _i6.PageRouteInfo<MobileAuthRouteArgs> {
   MobileAuthRoute({
-    _i6.Key? key,
-    required _i8.AuthViewModel viewModel,
+    _i7.Key? key,
+    required _i10.AuthViewModel viewModel,
     required void Function(Uri) onAuthCodeRedirect,
   }) : super(
           MobileAuthRoute.name,
@@ -161,9 +211,9 @@ class MobileAuthRouteArgs {
     required this.onAuthCodeRedirect,
   });
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
-  final _i8.AuthViewModel viewModel;
+  final _i10.AuthViewModel viewModel;
 
   final void Function(Uri) onAuthCodeRedirect;
 
@@ -174,11 +224,11 @@ class MobileAuthRouteArgs {
 }
 
 /// generated route for
-/// [_i4.DesktopAuthPage]
-class DesktopAuthRoute extends _i5.PageRouteInfo<DesktopAuthRouteArgs> {
+/// [_i5.DesktopAuthPage]
+class DesktopAuthRoute extends _i6.PageRouteInfo<DesktopAuthRouteArgs> {
   DesktopAuthRoute({
-    _i6.Key? key,
-    required _i8.AuthViewModel viewModel,
+    _i7.Key? key,
+    required _i10.AuthViewModel viewModel,
     required void Function(Uri) onAuthCodeRedirect,
   }) : super(
           DesktopAuthRoute.name,
@@ -200,9 +250,9 @@ class DesktopAuthRouteArgs {
     required this.onAuthCodeRedirect,
   });
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
-  final _i8.AuthViewModel viewModel;
+  final _i10.AuthViewModel viewModel;
 
   final void Function(Uri) onAuthCodeRedirect;
 
