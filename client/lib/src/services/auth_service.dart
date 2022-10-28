@@ -1,10 +1,8 @@
-import 'package:oauth2/oauth2.dart';
+import 'package:client/src/domain/oauth_config.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 
 typedef AuthCallback = Future<Uri> Function(Uri authUrl);
 
 abstract class AuthService {
-  Uri generateAuthUrl(AuthorizationCodeGrant grant, Uri redirectUrl);
-  Future<Uri> getRedirectUrl(AuthCallback authCallback, Uri authUrl);
-  Future<Credentials> handleAuthResponse(
-      AuthorizationCodeGrant grant, Map<String, String> redirectUrlQueryParams);
+  Future<TokenResponse?> authorize(OAuthConfig config);
 }

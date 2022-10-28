@@ -1,23 +1,43 @@
+import 'package:client/src/domain/oauth_config.dart';
 import 'package:client/src/services/auth_service.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:oauth2/oauth2.dart';
 
 @Injectable(as: AuthService)
 class AuthServiceImpl extends AuthService {
-  @override
-  Uri generateAuthUrl(AuthorizationCodeGrant grant, Uri redirectUrl) {
-    return grant.getAuthorizationUrl(redirectUrl);
-  }
+  final FlutterAppAuth _appAuth;
+
+  AuthServiceImpl(this._appAuth);
 
   @override
-  Future<Uri> getRedirectUrl(AuthCallback authCallback, Uri authUrl) async {
-    return await authCallback(authUrl);
-  }
+  Future<TokenResponse?> authorize(OAuthConfig config) async {
+    try {
+      final authResponse = await _appAuth.authorize(
+        AuthorizationRequest(
+          config.clientId,
+          config.redirectUrl.toString(),
+          serviceConfiguration: AuthorizationServiceConfiguration(
+            authorizationEndpoint: config.authUrl.toString(),
+            tokenEndpoint: config.tokenUrl.toString(),
+          ),
+        ),
+      );
 
-  @override
-  Future<Credentials> handleAuthResponse(
-      AuthorizationCodeGrant grant, Map<String, String> redirectUrlQueryParams) async {
-    final client = await grant.handleAuthorizationResponse(redirectUrlQueryParams);
-    return client.credentials;
+      final tokenResult = await _appAuth.token(
+        TokenRequest(config.clientId, config.redirectUrl.toString(),
+            authorizationCode: authResponse!.authorizationCode,
+            clientSecret: config.clientSecret,
+            nonce: authResponse.nonce,
+            codeVerifier: authResponse.codeVerifier,
+            serviceConfiguration: AuthorizationServiceConfiguration(
+              authorizationEndpoint: config.authUrl.toString(),
+              tokenEndpoint: config.tokenUrl.toString(),
+            )),
+      );
+
+      return tokenResult;
+    } catch (e) {
+      rethrow;
+    }
   }
 }
