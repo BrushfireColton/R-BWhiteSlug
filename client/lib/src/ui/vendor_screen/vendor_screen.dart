@@ -22,12 +22,9 @@ class _VendorScreenState
 
   @override
   Widget build(BuildContext context) {
-    String backgroundImage;
-    if (viewModel.selectedBackgroundImage.isNull) {
-      backgroundImage = viewModel.backgroundImageMap['Default']!;
-    } else {
-      backgroundImage = viewModel.selectedBackgroundImage.value!;
-    }
+    String backgroundImage =
+        viewModel.determineImage(viewModel.selectedBackgroundImage);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vendors'),
@@ -43,9 +40,15 @@ class _VendorScreenState
           itemCount: viewModel.backgroundImageMap.length - 1,
           itemBuilder: (context, index) {
             final vendor = viewModel.backgroundImageMap.keys.toList()[index];
+            final vendorImage =
+                viewModel.backgroundImageMap.values.toList()[index];
             return ListTile(
-              title: ElevatedButton(
-                child: Text(vendor),
+              title: Text(vendor),
+              textColor: Colors.orange,
+              leading: IconButton(
+                icon: Image.asset(vendorImage),
+                alignment: Alignment.centerLeft,
+                iconSize: 50,
                 onPressed: () {
                   viewModel.updateUI(vendor);
                 },
@@ -54,6 +57,11 @@ class _VendorScreenState
           },
         ),
       ),
+      floatingActionButton: TextButton(
+          onPressed: () {
+            viewModel.addUser();
+          },
+          child: const Text('Add User')),
     );
   }
 }

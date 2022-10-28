@@ -1,9 +1,12 @@
 import 'package:empire/empire.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
+import 'dart:math';
 
 @injectable
 class VendorScreenViewModel extends EmpireViewModel {
   final selectedBackgroundImage = EmpireNullableStringProperty();
+  dynamic backgroundImage;
   final backgroundImageMap = EmpireMapProperty({
     'Ada': 'assets/images/ada.png',
     'Timothy': 'assets/images/timothy.png',
@@ -20,5 +23,20 @@ class VendorScreenViewModel extends EmpireViewModel {
 
   void updateUI(vendorName) {
     selectedBackgroundImage(backgroundImageMap[vendorName]);
+  }
+
+  String determineImage(selectedImage) {
+    if (selectedImage.isNull) {
+      backgroundImage = backgroundImageMap['Default']!;
+    } else {
+      backgroundImage = selectedBackgroundImage.value!;
+    }
+    return backgroundImage;
+  }
+
+  addUser() {
+    const newUser = 'TheOtherHalf';
+    const newImage = 'assets/images/The_Other_Half.png';
+    backgroundImageMap.add(newUser, newImage);
   }
 }
