@@ -36,25 +36,45 @@ class _VendorScreenState
             fit: BoxFit.contain,
           ),
         ),
-        child: ListView.builder(
-          itemCount: viewModel.backgroundImageMap.length - 1,
-          itemBuilder: (context, index) {
-            final vendor = viewModel.backgroundImageMap.keys.toList()[index];
-            final vendorImage =
-                viewModel.backgroundImageMap.values.toList()[index];
-            return ListTile(
-              title: Text(vendor),
-              textColor: Colors.orange,
-              leading: IconButton(
-                icon: Image.asset(vendorImage),
-                alignment: Alignment.centerLeft,
-                iconSize: 50,
-                onPressed: () {
-                  viewModel.updateUI(vendor);
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: () {}, child: const Text('test')),
+                ElevatedButton(onPressed: () {}, child: const Text('test2')),
+              ],
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: viewModel.backgroundImageMap.length - 1,
+                itemBuilder: (context, index) {
+                  final vendor =
+                      viewModel.backgroundImageMap.keys.toList()[index];
+                  final vendorImage =
+                      viewModel.backgroundImageMap.values.toList()[index];
+                  return ListTile(
+                      title: Text(vendor),
+                      textColor: Colors.orange,
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage(vendorImage),
+                      ),
+                      onTap: () {
+                        viewModel.updateUI(vendor);
+                        greetingPopUp(vendor, context);
+                      });
                 },
               ),
-            );
-          },
+            ),
+            GestureDetector(
+              onTap: () => print('YAY'),
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: const BoxDecoration(color: Colors.red),
+              ),
+            )
+          ],
         ),
       ),
       floatingActionButton: TextButton(
@@ -63,5 +83,24 @@ class _VendorScreenState
           },
           child: const Text('Add User')),
     );
+  }
+
+  void greetingPopUp(vendor, BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(vendor),
+            content: Text(viewModel.provideVendorGreeting(vendor)),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK')),
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('CANCEL')),
+            ],
+          );
+        });
   }
 }
