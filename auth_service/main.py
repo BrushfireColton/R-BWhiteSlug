@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Request
+from fastapi import FastAPI, Depends, Request, status
 from dotenv import load_dotenv
 import os
 from auth_service import AuthService
@@ -8,9 +8,9 @@ load_dotenv()
 app = FastAPI()
 
 
-@app.get("/auth_url")
-def get_auth_url(auth_service: AuthService = Depends(create_auth_service)):
-    return auth_service.generate_auth_url(os.getenv("REDIRECT_URL"))
+@app.get("/api/v1/healthz", status_code=status.HTTP_200_OK)
+def health_check():
+    return "OK"
 
 
 @app.post("/get_token")
