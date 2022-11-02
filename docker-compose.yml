@@ -1,0 +1,40 @@
+version: "3"
+
+networks:
+  services_network: null
+
+services:
+  api_gateway:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: api_gateway
+
+    networks:
+      - services_network
+
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8080:80"
+
+    environment:
+      - NGINX_PORT=80
+
+  auth:
+    build:
+      context: ./auth_service
+      dockerfile: Dockerfile.dev
+    container_name: auth
+
+    networks:
+      - services_network
+
+    volumes:
+      - ./auth_service:/app
+
+    ports:
+      - "5678:5678"
