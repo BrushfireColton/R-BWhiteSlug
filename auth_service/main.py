@@ -9,7 +9,7 @@ app = FastAPI()
 
 
 @app.get("/api/v1/healthz", status_code=status.HTTP_200_OK)
-def health_check():
+def health_check() -> dict:
     return {"status": "OK"}
 
 
