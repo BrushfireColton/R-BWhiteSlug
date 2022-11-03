@@ -17,6 +17,6 @@ To start up the backend services, including the api gateway, simple run `docker 
 From the Debug and Run menu in VS Code, select the backend service you want to attach a debugger to and click the play button. This debugging session will stay active until you either close VS Code, or bring down the docker containers.
 
 ## Changing the nginx.conf file
-If you are altering the nginx configuration file while the container is running, you changes will not be reflected until you reload the nginx service running inside the api gateway container. To do this you can run the following command fro mthe root folder of the project in a terminal:
+If you are altering the nginx configuration file while the container is running, your changes will not be reflected until you reload the nginx service running inside the api gateway container. To do this you can run the following command from the root folder of the project in a terminal:
 
 `docker compose exec api_gateway nginx -s reload`
