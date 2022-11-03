@@ -15,6 +15,8 @@ def health_check() -> dict:
 def validate_request(
     response: Response, authorization: str | None = Header(default=None)
 ):
+    # TODO: Check for X API Key header
+
     result: dict = {"authorized": True}
 
     if authorization is None:
@@ -22,3 +24,8 @@ def validate_request(
         result["authorized"] = False
 
     return result
+
+
+# Step 1
+# Get Destiny 2 Profile. /Destiny2/{membershipType}/Profile/{destinyMembershipId}/
+# This will return characters. Need character ID.
