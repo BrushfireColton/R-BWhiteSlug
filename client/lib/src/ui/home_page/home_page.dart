@@ -1,9 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:auto_route/auto_route.dart';
-import 'package:client/src/core/di/injection.dart';
-import 'package:client/src/ui/core/routes.gr.dart';
 import 'package:client/src/ui/home_page/home_page_view_model.dart';
 import 'package:empire/empire.dart';
 import 'package:flutter/material.dart';
@@ -58,29 +52,7 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        viewModel.authorize((authUrl) {
-                          final completer = Completer<Uri>();
-
-                          if (Platform.isWindows) {
-                            AutoRouter.of(context).push(
-                              DesktopAuthRoute(
-                                viewModel: resolveInstanceOf(),
-                                onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
-                              ),
-                            );
-                          } else {
-                            AutoRouter.of(context).push(
-                              MobileAuthRoute(
-                                viewModel: resolveInstanceOf(),
-                                onAuthCodeRedirect: (redirectUrl) => completer.complete(redirectUrl),
-                              ),
-                            );
-                          }
-
-                          return completer.future;
-                        });
-                      },
+                      onPressed: viewModel.authorize,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
                       ),

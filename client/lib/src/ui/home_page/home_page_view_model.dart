@@ -13,7 +13,7 @@ class HomePageViewModel extends EmpireViewModel {
   @override
   Iterable<EmpireProperty> get empireProps => [];
 
-  Future<void> authorize(AuthCallback authCallback) async {
+  Future<void> authorize() async {
     final test = await _authService.authorize(oAuthConfig);
     //TODO: Encrypt and Store token data on device
   }
