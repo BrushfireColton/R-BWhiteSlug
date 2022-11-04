@@ -15,6 +15,6 @@ class HomePageViewModel extends EmpireViewModel {
 
   Future<void> authorize() async {
     final test = await _authService.authorize(oAuthConfig);
-    //TODO: Encrypt and Store token data on device
+    if (test != null) {}
   }
 }
