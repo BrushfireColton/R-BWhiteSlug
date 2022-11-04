@@ -6,11 +6,42 @@ class HomePage extends EmpireWidget<HomePageViewModel> {
   const HomePage({super.key, required super.viewModel});
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel> createEmpire() => _HomePageState(viewModel);
+  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel>
+      createEmpire() => _HomePageState(viewModel);
 }
 
 class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
   _HomePageState(super.viewModel);
+
+  @override
+  void didChangeDependencies() {
+    viewModel.checkCachedToken();
+    super.didChangeDependencies();
+  }
+
+  Widget getAuthWidget() {
+    if (viewModel.authtoken.isNull) {
+      return ElevatedButton(
+        onPressed: viewModel.authorize,
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.deepOrange),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Authorize With Bungie',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText2
+                ?.copyWith(color: Colors.white, fontSize: 24),
+          ),
+        ),
+      );
+    } else {
+      return const Text('Hurrah');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,25 +79,13 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                       child: Text(
                         'Vendor Checker Thingy',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            ?.copyWith(color: Colors.white),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: viewModel.authorize,
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Authorize With Bungie',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              ?.copyWith(color: Colors.white, fontSize: 24),
-                        ),
-                      ),
-                    ),
+                    getAuthWidget(),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
                       child: Image.asset(

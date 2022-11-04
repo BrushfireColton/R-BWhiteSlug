@@ -1,3 +1,4 @@
+import 'package:client/src/domain/bungie_token.dart';
 import 'package:client/src/domain/oauth_config.dart';
 import 'package:client/src/services/auth_service.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
@@ -10,7 +11,7 @@ class AuthServiceImpl extends AuthService {
   AuthServiceImpl(this._appAuth);
 
   @override
-  Future<TokenResponse?> authorize(OAuthConfig config) async {
+  Future<BungieToken?> authorize(OAuthConfig config) async {
     try {
       final authResponse = await _appAuth.authorize(
         AuthorizationRequest(
@@ -34,8 +35,17 @@ class AuthServiceImpl extends AuthService {
               tokenEndpoint: config.tokenUrl.toString(),
             )),
       );
-
-      return tokenResult;
+      if (tokenResult == null) {
+        return null;
+      }
+      return BungieToken(
+          tokenResult.accessToken,
+          tokenResult.refreshToken,
+          tokenResult.accessTokenExpirationDateTime,
+          tokenResult.idToken,
+          tokenResult.tokenType,
+          tokenResult.scopes,
+          tokenResult.tokenAdditionalParameters);
     } catch (e) {
       rethrow;
     }
