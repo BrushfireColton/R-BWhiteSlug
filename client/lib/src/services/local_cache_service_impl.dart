@@ -23,4 +23,10 @@ class LocalCacheServiceImpl extends LocalCacheService {
       return json.decode(jsonData);
     }
   }
+
+  @override
+  Future<bool> remove(String key) async {
+    final sharedPref = await SharedPreferences.getInstance();
+    return sharedPref.remove(key);
+  }
 }

@@ -6,8 +6,7 @@ class HomePage extends EmpireWidget<HomePageViewModel> {
   const HomePage({super.key, required super.viewModel});
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel>
-      createEmpire() => _HomePageState(viewModel);
+  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel> createEmpire() => _HomePageState(viewModel);
 }
 
 class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
@@ -24,22 +23,30 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
       return ElevatedButton(
         onPressed: viewModel.authorize,
         style: ButtonStyle(
-          backgroundColor:
-              MaterialStateColor.resolveWith((states) => Colors.deepOrange),
+          backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Authorize With Bungie',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                ?.copyWith(color: Colors.white, fontSize: 24),
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white, fontSize: 24),
           ),
         ),
       );
     } else {
-      return const Text('Hurrah');
+      return ElevatedButton(
+        onPressed: viewModel.clearCachedToken,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Clear Cache',
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white, fontSize: 24),
+          ),
+        ),
+      );
     }
   }
 
@@ -79,10 +86,7 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                       child: Text(
                         'Vendor Checker Thingy',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3
-                            ?.copyWith(color: Colors.white),
+                        style: Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white),
                       ),
                     ),
                     getAuthWidget(),

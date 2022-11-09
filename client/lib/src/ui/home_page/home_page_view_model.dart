@@ -12,8 +12,7 @@ class HomePageViewModel extends EmpireViewModel {
   final LocalCacheService _localCacheService;
   final authtoken = EmpireProperty<BungieToken?>(null);
 
-  HomePageViewModel(
-      this.oAuthConfig, this._authService, this._localCacheService);
+  HomePageViewModel(this.oAuthConfig, this._authService, this._localCacheService);
 
   @override
   Iterable<EmpireProperty> get empireProps => [authtoken];
@@ -29,6 +28,15 @@ class HomePageViewModel extends EmpireViewModel {
     final token = await _authService.authorize(oAuthConfig);
     if (token != null) {
       _localCacheService.saveMap('token', token.toMap());
+      authtoken.set(token);
+    }
+  }
+
+  Future<void> clearCachedToken() async {
+    final tokenCleared = await _localCacheService.remove('token');
+
+    if (tokenCleared) {
+      authtoken.reset();
     }
   }
 }
