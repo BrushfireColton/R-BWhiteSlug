@@ -38,3 +38,18 @@ services:
 
     ports:
       - "5678:5678"
+
+  vendor:
+      build:
+        context: ./vendor_service
+        dockerfile: Dockerfile.dev
+      container_name: vendor
+
+      networks:
+        - services_network
+
+      volumes:
+        - ./vendor_service:/app
+
+      ports:
+        - "5679:5679"

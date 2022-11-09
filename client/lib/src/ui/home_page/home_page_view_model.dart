@@ -16,7 +16,7 @@ class HomePageViewModel extends EmpireViewModel {
       this.oAuthConfig, this._authService, this._localCacheService);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [];
+  Iterable<EmpireProperty> get empireProps => [authtoken];
 
   Future<void> checkCachedToken() async {
     final cacheToken = await _localCacheService.getMap('token');

@@ -1,37 +1,38 @@
 {
-    "folders": [
-        {
-            "name": "root",
-            "path": "."
-        },
-        {
-            "name": "client",
-            "path": "client"
-        },
-        {
-            "name": "nginx",
-            "path": "nginx"
-        },
-        {
-            "name": "auth_service",
-            "path": "auth_service"
-        }
-    ],
-    "settings": {
-        "editor.formatOnSave": true,
-        "python.linting.enabled": true,
-        "python.formatting.provider": "black",
-        "python.sortImports.args": [
-            "--profile",
-            "black"
-        ],
-        "python.linting.flake8Enabled": true,
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
     },
-    "extensions": {
-        "recommendations": [
-            "dart-code.flutter",
-            "raynigon.nginx-formatter",
-            "strivebusinesssolutions.empire-flutter-snippets"
-        ]
+    {
+      "name": "client",
+      "path": "client"
+    },
+    {
+      "name": "nginx",
+      "path": "nginx"
+    },
+    {
+      "name": "auth_service",
+      "path": "auth_service"
+    },
+    {
+      "name": "vendor_service",
+      "path": "vendor_service"
     }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.sortImports.args": ["--profile", "black"],
+    "python.linting.flake8Enabled": true
+  },
+  "extensions": {
+    "recommendations": [
+      "dart-code.flutter",
+      "raynigon.nginx-formatter",
+      "strivebusinesssolutions.empire-flutter-snippets"
+    ]
+  }
 }
