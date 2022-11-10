@@ -42,7 +42,7 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Clear Cache',
+            'Show Vendors Message',
             style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white, fontSize: 24),
           ),
         ),

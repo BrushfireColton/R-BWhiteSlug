@@ -10,9 +10,14 @@ class HomePageViewModel extends EmpireViewModel {
   final OAuthConfig oAuthConfig;
   final AuthService _authService;
   final LocalCacheService _localCacheService;
+
   final authtoken = EmpireProperty<BungieToken?>(null);
 
-  HomePageViewModel(this.oAuthConfig, this._authService, this._localCacheService);
+  HomePageViewModel(
+    this.oAuthConfig,
+    this._authService,
+    this._localCacheService,
+  );
 
   @override
   Iterable<EmpireProperty> get empireProps => [authtoken];

@@ -1,3 +1,4 @@
+import 'package:client/src/core/services/http_service_config.dart';
 import 'package:client/src/domain/bungie_token.dart';
 import 'package:client/src/domain/oauth_config.dart';
 import 'package:client/src/services/local_cache_service.dart';
@@ -29,5 +30,10 @@ abstract class CustomInjectionsModule {
     }
 
     return BungieToken();
+  }
+
+  @factoryMethod
+  HttpServiceConfig getHttpServiceConfig(BungieToken bungieToken) {
+    return HttpServiceConfig(dotenv.get('BASE_URL'), bungieToken);
   }
 }

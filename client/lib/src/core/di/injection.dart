@@ -14,6 +14,8 @@ void configureDependencies() => $initGetIt(getIt);
 
 T resolveInstanceOf<T extends Object>() => getIt.get<T>();
 
+Future<T> resolveInstanceOfAsync<T extends Object>() async => await getIt.getAsync<T>();
+
 T resolveInstanceSingleParamOf<T extends Object>(dynamic param) => getIt.get<T>(param1: param);
 
 T resolveInstanceTwoParamsOf<T extends Object>(dynamic param1, dynamic param2) =>

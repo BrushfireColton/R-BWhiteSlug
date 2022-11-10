@@ -12,10 +12,8 @@ def health_check() -> dict:
 
 
 @app.get("/api/v1/vendors")
-def get_vendors(
-    response: Response, authorization: str | None = Header(default=None)
-):
-   return 'Hello World'
+def get_vendors(response: Response, authorization: str | None = Header(default=None)):
+    return "Hello World"
 
 
 # Step 1

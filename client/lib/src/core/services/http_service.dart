@@ -1,15 +1,15 @@
+import 'package:client/src/core/services/http_service_config.dart';
 import 'package:client/src/core/services/http_service_response.dart';
-import 'package:client/src/domain/bungie_token.dart';
 import 'package:dio/dio.dart';
 
-abstract class Service {
-  final BungieToken authToken;
+abstract class HttpService {
+  final HttpServiceConfig serviceConfig;
   final Dio dio;
-  Service(this.authToken, this.dio);
+  HttpService(this.serviceConfig, this.dio);
 
   Options _getRequestOptions() {
     final headers = <String, dynamic>{
-      'Authorization': 'Bearer ${authToken.accessToken}',
+      'Authorization': 'Bearer ${serviceConfig.bungieToken.accessToken}',
       'Content-Type': 'application/json',
     };
 
@@ -20,7 +20,7 @@ abstract class Service {
     String endpoint, {
     Map<String, dynamic>? queryParameters,
   }) async {
-    final response = await dio.get(endpoint, options: _getRequestOptions());
+    final response = await dio.get('${serviceConfig.baseUrl}$endpoint', options: _getRequestOptions());
     return HttpServiceResponse(
       response.data,
       response.headers.map,
