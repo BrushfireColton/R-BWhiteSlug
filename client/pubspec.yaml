@@ -42,7 +42,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   json_serializable: ^6.5.4
   json_annotation: ^4.7.0
-  injectable: ^1.5.3
+  injectable: ^1.5.4
   get_it: ^7.2.0
   auto_route: ^5.0.2
   window_manager: ^0.2.7

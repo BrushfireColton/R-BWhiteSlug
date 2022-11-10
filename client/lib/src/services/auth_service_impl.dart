@@ -39,13 +39,13 @@ class AuthServiceImpl extends AuthService {
         return null;
       }
       return BungieToken(
-          tokenResult.accessToken,
-          tokenResult.refreshToken,
-          tokenResult.accessTokenExpirationDateTime,
-          tokenResult.idToken,
-          tokenResult.tokenType,
-          tokenResult.scopes,
-          tokenResult.tokenAdditionalParameters);
+          accessToken: tokenResult.accessToken,
+          refreshToken: tokenResult.refreshToken,
+          accessTokenExpirationDateTime: tokenResult.accessTokenExpirationDateTime,
+          idToken: tokenResult.idToken,
+          tokenType: tokenResult.tokenType,
+          scopes: tokenResult.scopes,
+          tokenAdditionalParameters: tokenResult.tokenAdditionalParameters);
     } catch (e) {
       rethrow;
     }
