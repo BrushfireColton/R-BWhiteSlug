@@ -38,10 +38,12 @@ class HomePageViewModel extends EmpireViewModel {
   }
 
   Future<void> clearCachedToken() async {
-    final tokenCleared = await _localCacheService.remove('token');
+    final token = await _localCacheService.getMap('token');
+    print(token!['access_token']);
+    //final tokenCleared = await _localCacheService.remove('token');
 
-    if (tokenCleared) {
-      authtoken.reset();
-    }
+    // if (tokenCleared) {
+    //   authtoken.reset();
+    // }
   }
 }
