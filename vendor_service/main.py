@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, Header, Response
 from dotenv import load_dotenv
 import requests
-
+import os
 
 load_dotenv()
 app = FastAPI()
@@ -14,11 +14,16 @@ def health_check() -> dict:
 
 @app.get("/api/v1/vendors")
 def get_vendors(response: Response, authorization: str | None = Header(default=None)):
-    api_key = ''
-    auth_token = authorization.split(" ")[1]
-    headers = {'X-API-Key': api_key, 'Authorization': auth_token}
-    result = requests.get('https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/', headers=headers)
-    return "Hello World"
+    api_key = os.getenv(
+        "API_KEY"
+    )  # Need to add .env file to vendor_service with your API_KEY
+    headers = {"X-API-Key": api_key, "Authorization": authorization}
+    result = requests.get(
+        "https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/",
+        headers=headers,
+    )
+
+    return result.json()
 
 
 # Step 1
