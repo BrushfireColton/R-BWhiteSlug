@@ -9,4 +9,11 @@ class MembershipServiceImpl(MembershipService):
 
     def get_primary_membership(self, api_key: str, token: str) -> Membership:
         memberships = self.membership_repository.get_memberships(api_key, token)
-        return next(x for x in memberships if x.id == x.primary_membership_id)
+        membershipCount = len(memberships)
+        if membershipCount > 0:
+            if membershipCount == 1:
+                return memberships[0]
+            else: 
+                return next(x for x in memberships if x.id == x.primary_membership_id)
+        else:
+            return []

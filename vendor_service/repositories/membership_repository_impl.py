@@ -15,7 +15,9 @@ class MembershipRepositoryImpl(MembershipRepository):
         )
 
         json_data = result.json()["Response"]
-        primary_membership_id = json_data["primaryMembershipId"]
+
+        primary_membership_id = json_data["primaryMembershipId"] if "primaryMembershipId" in json_data else None
+        
 
         return list(
             map(
