@@ -9,3 +9,12 @@ class Character:
     ) -> None:
         self.id = id
         self.class_type = class_type
+
+    def __dict__(self) -> dict:
+        return{
+            "characterId": self.id,
+            "classType": self.class_type
+        }
+
+    def toJson(self) -> dict:
+        return self.__dict__()
