@@ -1,4 +1,3 @@
-
 # Step 1
 # Get Destiny 2 Profile. /Destiny2/{membershipType}/Profile/{destinyMembershipId}/
 # This will return characters. Need character ID.
@@ -13,6 +12,7 @@ from repositories.profile_repository import ProfileRepository
 
 
 class ProfileRepositoryImpl(ProfileRepository):
+<<<<<<< HEAD
     def get_profile(self, api_key: str, token: str, membership: Membership) -> Profile:
         headers = {"X-API-Key": api_key, "Authorization": token}
 
@@ -26,3 +26,6 @@ class ProfileRepositoryImpl(ProfileRepository):
             characters.append(Character(key, ClassType(int(value['classType']))))
 
         return Profile(characters=characters)
+=======
+    pass
+>>>>>>> bd8f594275565377e01d1c54c7b3996b87f3433a
