@@ -2,7 +2,6 @@ import 'package:client/src/domain/bungie_token.dart';
 import 'package:client/src/domain/oauth_config.dart';
 import 'package:client/src/services/auth_service.dart';
 import 'package:client/src/services/local_cache_service.dart';
-import 'package:client/src/services/profile_service.dart';
 import 'package:empire/empire.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,7 +10,6 @@ class HomePageViewModel extends EmpireViewModel {
   final OAuthConfig oAuthConfig;
   final AuthService _authService;
   final LocalCacheService _localCacheService;
-  final ProfileService _profileService;
 
   final authtoken = EmpireProperty<BungieToken?>(null);
 
@@ -19,7 +17,6 @@ class HomePageViewModel extends EmpireViewModel {
     this.oAuthConfig,
     this._authService,
     this._localCacheService,
-    this._profileService,
   );
 
   @override
@@ -32,12 +29,12 @@ class HomePageViewModel extends EmpireViewModel {
     }
   }
 
-  Future<void> authorize() async {
+  Future<void> authorize(Future<void> Function() onAuthSuccess) async {
     final token = await _authService.authorize(oAuthConfig);
-    final profile = await _profileService.getProfile();
     if (token != null) {
       _localCacheService.saveMap('token', token.toMap());
       authtoken.set(token);
+      await onAuthSuccess();
     }
   }
 

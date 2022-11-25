@@ -6,8 +6,8 @@ class Profile {
   Profile(this.characters);
 
   static Profile fromMap(Map<String, dynamic> jsonData) {
-    return Profile(jsonData["characters"]
+    return Profile(List.from(jsonData["characters"])
         .map((e) => Character.fromMap(e))
-        .toList() as List<Character>);
+        .toList());
   }
 }

@@ -1,12 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:client/src/ui/home_page/home_page_view_model.dart';
 import 'package:empire/empire.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/di/injection.dart';
+import '../core/routes.gr.dart';
 
 class HomePage extends EmpireWidget<HomePageViewModel> {
   const HomePage({super.key, required super.viewModel});
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel> createEmpire() => _HomePageState(viewModel);
+  EmpireState<EmpireWidget<EmpireViewModel>, HomePageViewModel>
+      createEmpire() => _HomePageState(viewModel);
 }
 
 class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
@@ -18,36 +23,9 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
     super.didChangeDependencies();
   }
 
-  Widget getAuthWidget() {
-    if (viewModel.authtoken.isNull) {
-      return ElevatedButton(
-        onPressed: viewModel.authorize,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Authorize With Bungie',
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white, fontSize: 24),
-          ),
-        ),
-      );
-    } else {
-      return ElevatedButton(
-        onPressed: viewModel.clearCachedToken,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateColor.resolveWith((states) => Colors.deepOrange),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Show Vendors Message',
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white, fontSize: 24),
-          ),
-        ),
-      );
-    }
+  Future<void> onAuthSuccess() async {
+    AutoRouter.of(context).push(
+        CharacterSelectorRoute(viewModel: await resolveInstanceOfAsync()));
   }
 
   @override
@@ -86,10 +64,29 @@ class _HomePageState extends EmpireState<HomePage, HomePageViewModel> {
                       child: Text(
                         'Vendor Checker Thingy',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3
+                            ?.copyWith(color: Colors.white),
                       ),
                     ),
-                    getAuthWidget(),
+                    ElevatedButton(
+                      onPressed: () => viewModel.authorize(onAuthSuccess),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.deepOrange),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Authorize With Bungie',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.copyWith(color: Colors.white, fontSize: 24),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
                       child: Image.asset(

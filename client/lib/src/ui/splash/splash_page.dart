@@ -17,10 +17,10 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void didChangeDependencies() {
-    timer = Timer(const Duration(seconds: 3), () async {
+    timer = Timer(const Duration(seconds: 3), () {
       AutoRouter.of(context).push(
         HomeRoute(
-          viewModel: await resolveInstanceOfAsync(),
+          viewModel: resolveInstanceOf(),
         ),
       );
     });
