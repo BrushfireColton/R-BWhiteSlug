@@ -8,7 +8,7 @@ import '../../domain/profile.dart';
 @injectable
 class CharacterSelectorViewModel extends EmpireViewModel {
   final ProfileService profileService;
-  final characters = EmpireProperty<List<Character>>([]);
+  final characters = EmpireListProperty<Character>([]);
 
   CharacterSelectorViewModel(this.profileService);
 
@@ -18,6 +18,7 @@ class CharacterSelectorViewModel extends EmpireViewModel {
   Future<void> loadCharacters() async {
     final profile =
         await doAsync<Profile>(() async => await profileService.getProfile());
-    characters.set(profile.characters);
+
+    characters.addAll(profile.characters);
   }
 }

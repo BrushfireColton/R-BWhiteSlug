@@ -1,6 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:client/src/ui/characters/character_selector_view_model.dart';
 import 'package:empire/empire.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/di/injection.dart';
+import '../core/routes.gr.dart';
 
 class CharacterSelectorPage extends EmpireWidget<CharacterSelectorViewModel> {
   const CharacterSelectorPage({super.key, required super.viewModel});
@@ -23,10 +27,66 @@ class _CharacterSelectorPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child:
-            viewModel.busy ? CircularProgressIndicator() : Text('hello world'),
+      appBar: AppBar(
+        title: const Text('Characters'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: viewModel.characters.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title:
+                      Text(viewModel.characters[index].classType.description),
+                  textColor: Colors.orange,
+                  onTap: () {
+                    characterPopUp(context, index);
+                  },
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+                onPressed: () {
+                  AutoRouter.of(context).push(
+                    AddCharacterRoute(
+                      viewModel: resolveInstanceOf(),
+                    ),
+                  );
+                },
+                child: const Text("Add Character")),
+          )
+        ],
       ),
     );
+  }
+
+  void characterPopUp(BuildContext context, index) {
+    showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            title: Text(viewModel.characters[index].classType.description),
+            content: Stack(
+              children: [
+                Image.network(
+                  'https://images.contentstack.io/v3/assets/blte410e3b15535c144/blt815895fef5087a37/61fc75572f5ed026e153ca95/pose-titan-mobile-r.png?format=webp',
+                ),
+                const Text("Hello Guardian")
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK')),
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('CANCEL'))
+            ],
+          );
+        }));
   }
 }
