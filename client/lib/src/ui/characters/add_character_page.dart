@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:empire/empire.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/class_type.dart';
 import '../core/components/app_date_picker.dart';
 import 'add_character_view_model.dart';
 
@@ -16,7 +17,6 @@ class AddCharacterPage extends EmpireWidget<AddCharacterViewModel> {
 class _AddCharacterPageState
     extends EmpireState<AddCharacterPage, AddCharacterViewModel> {
   late final TextEditingController nameController;
-  final _formKey = GlobalKey<FormState>();
 
   _AddCharacterPageState(super.viewModel);
 
@@ -38,29 +38,57 @@ class _AddCharacterPageState
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              validator: viewModel.validator.validateName,
-              decoration: const InputDecoration(
+      body: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(
                 label: Text('Name'),
+                errorText: viewModel.validator.errors['name']),
+            controller: nameController,
+            onChanged: (name) {
+              viewModel.validator.validateName(name);
+              viewModel.name.set(name);
+            },
+          ),
+          Text('Last Name is: ${viewModel.name}'),
+          AppDatePicker(onDateSelected: viewModel.selectedDate),
+          Row(
+            children: [
+              Expanded(
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    errorText: viewModel.validator.errors['classType'],
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<ClassType>(
+                        items: ClassType.values
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.description),
+                                ))
+                            .toList(),
+                        value: viewModel.classType.value,
+                        onChanged: (value) {
+                          viewModel.validator.validateClassType(value);
+                          viewModel.classType.set(value);
+                        }),
+                  ),
+                ),
               ),
-              controller: nameController,
-              onChanged: viewModel.name,
-            ),
-
-            Text('Last Name is: ${viewModel.name}'),
-            AppDatePicker(onDateSelected: viewModel.selectedDate),
-            // DropdownButtonFormField(items: items, onChanged: onChanged),
-            ElevatedButton(
-                onPressed: () {
-                  _formKey.currentState?.validate();
-                },
-                child: Text('Save'))
-          ],
-        ),
+              ElevatedButton(
+                  onPressed: () {
+                    viewModel.validator.validateClassType(null);
+                    viewModel.classType.reset();
+                  },
+                  child: const Text('Clear')),
+            ],
+          ),
+          ElevatedButton(
+              onPressed: viewModel.validator.isValid
+                  ? () => viewModel.saveCharacter(AutoRouter.of(context).pop)
+                  : null,
+              child: Text('Save'))
+        ],
       ),
     );
   }

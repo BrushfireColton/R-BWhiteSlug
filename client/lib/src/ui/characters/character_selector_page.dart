@@ -4,6 +4,7 @@ import 'package:empire/empire.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/di/injection.dart';
+import '../../domain/character.dart';
 import '../core/routes.gr.dart';
 
 class CharacterSelectorPage extends EmpireWidget<CharacterSelectorViewModel> {
@@ -50,12 +51,17 @@ class _CharacterSelectorPageState
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: OutlinedButton(
-                onPressed: () {
-                  AutoRouter.of(context).push(
+                onPressed: () async {
+                  final newCharacter =
+                      await AutoRouter.of(context).push<Character?>(
                     AddCharacterRoute(
                       viewModel: resolveInstanceOf(),
                     ),
                   );
+
+                  if (newCharacter != null) {
+                    viewModel.characters.add(newCharacter);
+                  }
                 },
                 child: const Text("Add Character")),
           )

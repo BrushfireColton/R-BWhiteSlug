@@ -5,6 +5,7 @@ class ClassType extends Equatable {
   final String description;
 
   const ClassType(this.value, this.description);
+  static List<ClassType> get values => [titan, hunter, warlock];
 
   static ClassType titan = const ClassType(0, 'Titan');
   static ClassType hunter = const ClassType(1, 'Hunter');
