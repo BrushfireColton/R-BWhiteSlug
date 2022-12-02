@@ -25,8 +25,10 @@ class ProfileRepositoryImpl(ProfileRepository):
         characters: List[Character] = []
 
         # character_keys = characters_dict.keys()
-        for number in range(3):
+        #for number in range(3):
             # character_data = characters_dict[key]
-            characters.append(Character(str(number), class_type=ClassType.Titan))
+        characters.append(Character(str(0), name='Zavala', class_type=ClassType.Titan))
+        characters.append(Character(str(1), name='Cayde', class_type=ClassType.Hunter))
+        characters.append(Character(str(2), name='Ikora', class_type=ClassType.Warlock))
 
         return Profile(characters=characters)
