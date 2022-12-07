@@ -5,4 +5,5 @@ abstract class ProfileService extends HttpService {
   ProfileService(super.serviceConfig, super.dio);
 
   Future<Profile> getProfile();
+  Future<Profile> addCharacter(String name, String classType);
 }

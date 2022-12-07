@@ -38,8 +38,7 @@ class _CharacterSelectorPageState
               itemCount: viewModel.characters.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title:
-                      Text(viewModel.characters[index].classType.description),
+                  title: Text(viewModel.characters[index].name),
                   textColor: Colors.orange,
                   onTap: () {
                     characterPopUp(context, index);
@@ -52,15 +51,14 @@ class _CharacterSelectorPageState
             padding: const EdgeInsets.all(8.0),
             child: OutlinedButton(
                 onPressed: () async {
-                  final newCharacter =
-                      await AutoRouter.of(context).push<Character?>(
+                  final newCharacter = await AutoRouter.of(context).push(
                     AddCharacterRoute(
                       viewModel: resolveInstanceOf(),
                     ),
                   );
 
                   if (newCharacter != null) {
-                    viewModel.characters.add(newCharacter);
+                    viewModel.characters.add(newCharacter as Character);
                   }
                 },
                 child: const Text("Add Character")),
