@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, status, Header
+from fastapi import Depends, FastAPI, status, Header, Request
 from dotenv import load_dotenv
 import os
 from di import get_membership_service, get_profile_repository
@@ -42,3 +42,13 @@ def get_profile(
     result = profile_repository.get_profile(api_key,authorization, membership)
 
     return result.toJson()
+
+@app.post("/api/v1/profile")
+async def add_character(
+    request: Request,
+    profile_repository: ProfileRepository = Depends(get_profile_repository),
+):
+    json = await request.json()
+    updated_profile = profile_repository.add_character(json['name'], json['class_type'])
+
+    return updated_profile.toJson()
