@@ -1,7 +1,8 @@
+import 'package:client/src/domain/character.dart';
 import 'package:client/src/services/profile_service.dart';
-import 'package:http/http.dart';
 import 'package:injectable/injectable.dart';
 
+import '../domain/class_type.dart';
 import '../domain/profile.dart';
 
 @Injectable(as: ProfileService)
@@ -15,8 +16,9 @@ class ProfileServiceImpl extends ProfileService {
   }
 
   @override
-  Future<Profile> addCharacter(String name, String classType) async {
-    final response = await post(data, '/profile/all');
-    return 
+  Future<Profile> addCharacter(String name, ClassType classType) async {
+    final newCharacter = Character('test', name, classType);
+    final response = await post(newCharacter, '/profile/all');
+    return Profile.fromMap(response.data!);
   }
 }

@@ -1,5 +1,5 @@
-class HttpServiceResponse<T> {
-  final T data;
+class HttpServiceResponse {
+  final dynamic data;
   final Map<String, List<String>> headers;
   final String? statusMessage;
   final int? statusCode;
